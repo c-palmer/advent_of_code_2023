@@ -1,0 +1,26 @@
+part 1:
+
+int sum = 0
+for each line:
+    delete all non-numerical characters
+    append first char to new string, then append last char to that same string
+    cast to int
+        if result is nan, return 0  
+    add to sum
+
+print sum    
+
+
+
+part 2:
+
+for each line:
+    get all valid digits in string:
+        find all digits in string and store them and their index in array
+        find all digit words in string and store their corresponding digit and their index in same array
+        return array
+    sort array by ascending index
+    concatenate first and last digits into a single string containing a two digit number
+    convert two digit number in the form of a string into an int
+
+sum up all of the ints representing each line

@@ -1,1 +1,3 @@
-# advent_of_code_2023
+# Advent of Code 2023
+
+Most of my programs will be written in JavaScript
