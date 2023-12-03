@@ -58,6 +58,7 @@ const res = input
     .reduce((acc, string) => acc + parseInt(string), 0);
 
 console.log(res);
+// expected output: 53340
 
 // // debug
 // const res = [];
