@@ -1,5 +1,5 @@
 const fs = require('fs');
-const util = require('util');
+// const util = require('util');
 
 const input = fs.readFileSync('input.txt', 'utf-8');
 
@@ -66,8 +66,8 @@ const res = input
     .map(parseGame)
     .map(findMinCubes)
     .map(findGamePower)
-    // .reduce((acc, game) => acc + game.power, 0);
+    .reduce((acc, game) => acc + game.power, 0);
 
-console.log(util.inspect(res, false, null, true));
-// console.log(res);
+// console.log(util.inspect(res, false, null, true));
+console.log(res);
 // expected value: 78375
