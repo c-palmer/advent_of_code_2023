@@ -4,64 +4,46 @@ const fs = require('fs');
 const input = fs.readFileSync('input.txt', 'utf-8');
 
 const wordToNum = {
-    'one': '1',
-    'two': '2',
-    'three': '3',
-    'four': '4',
-    'five': '5',
-    'six': '6',
-    'seven': '7',
-    'eight': '8',
-    'nine': '9',
+    one: '1',
+    two: '2',
+    three: '3',
+    four: '4',
+    five: '5',
+    six: '6',
+    seven: '7',
+    eight: '8',
+    nine: '9',
 };
 
-const parseDigits = (string) => {
-    const digits = [];
+const tokenizeDigits = (str) => {
+    const tokens = [];
 
-    // find all digit words, save corresponding digit and index in digits array
-    Object.keys(wordToNum).forEach((key) => {
-        let index;
-        let currentIndex = 0;
-        
-        while ((index = string.indexOf(key, currentIndex)) != -1) {
-            digits.push({'index': index, 'digit': wordToNum[key]});
-            currentIndex = index + 1;
+    const tokenize = (token) => {
+        let regex = new RegExp(`${token}`, 'g');
+        let match;
+
+        while ((match = regex.exec(str)) !== null) {
+            if (/\d/.test(match))
+                tokens.push({index: match.index, value: match[0]});
+            else
+                tokens.push({index: match.index, value: wordToNum[match[0]]});
         }
-    });
+    }
 
-    // find all digits, save that digit and its index in digits array
-    Object.values(wordToNum).forEach((digit) => {
-        let index;
-        let currentIndex = 0;
-        
-        while ((index = string.indexOf(digit, currentIndex)) != -1) {
-            digits.push({'index': index, 'digit': digit});
-            currentIndex = index + 1;
-        }
-    });
+    // tokenize all digit words
+    Object.keys(wordToNum).forEach(tokenize);
 
-    return digits.sort((a, b) => a.index - b.index);
+    // tokenize each digit
+    Object.values(wordToNum).forEach(tokenize);
+
+    return tokens.sort((a, b) => a.index - b.index);
 };
 
-// read input
-// break up input such that every line is its own string
-// find all occurrences of the numbers 0-9, save them and their indices to an array
-// find all occurrences of those numbers' english words, save their corresponding digits and indices to same array
-// sort array in order of ascending index
-// create string by concatenating first and last digits in array
-// convert string to int
-// sum up all ints
 const res = input
     .split('\n')
-    .map((string) => parseDigits(string))
-    .map((arr) => arr[0].digit + arr[arr.length - 1].digit)
-    .reduce((acc, string) => acc + parseInt(string), 0);
+    .map(tokenizeDigits)
+    .map((digits) => digits[0].value + digits[digits.length - 1].value)
+    .reduce((acc, calibration) => acc + parseInt(calibration), 0);
 
 console.log(res);
 // expected output: 53340
-
-// // debug
-// const res = [];
-// input.split('\n').forEach((string) => res.push({string}));
-// res.forEach((obj) => obj.digits = parseDigits(obj.string));
-// console.log(util.inspect(res, false, null, true));
