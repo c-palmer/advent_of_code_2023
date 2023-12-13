@@ -1,0 +1,13 @@
+read data
+
+tokenize each number with information about the indeces it spans and its decimal value
+
+tokenize each special character, list of number chars in valid range and their indeces
+    use this number char list to attach tokenized numbers to special character
+    if tokenized number has been matched, mark it so no duplicates are possible
+
+    when checking adjacent cells, make sure they are not out of bounds
+
+    for each special char, sum all of the associated tokenized numbers
+
+sum all of the sums associated with each special char

@@ -88,7 +88,8 @@ const numbers = tokens
     
 const res = specialChars
     .map(connectSpecialCharsToNums)
-    .map((specialChar) => specialChar.numbers.reduce((acc, number) => acc + number.value, 0))
+    .filter((specialChar) => specialChar.value == '*' && specialChar.numbers.length == 2)
+    .map((specialChar) => specialChar.numbers.reduce((acc, number) => acc * number.value, 1))
     .reduce((acc, num) => acc + num, 0);
 
 console.log(util.inspect(res, false, null, true));

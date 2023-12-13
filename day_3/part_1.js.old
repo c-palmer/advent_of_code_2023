@@ -1,0 +1,95 @@
+const fs = require('fs');
+const util = require('util');
+
+const input = fs.readFileSync('input.txt', 'utf-8');
+
+const tokenizeInput = (input) => {
+    const tokens = [];
+
+    input
+        .split('\n')
+        .filter(Boolean)
+        .forEach((str, lineNum) => {
+            let match;
+
+            // tokenize numbers
+            let index = 0;
+            while ((match = str.substring(index).match(/(?<!\d)\d+/)) != null) {
+                tokens.push({
+                    type: 'number',
+                    val: parseInt(match[0]),
+                    position: { row: lineNum, col: index + match.index },
+                    length: match[0].length,
+                    connected: false
+                });
+
+                index += match['index'] + match[0].length;
+            }
+
+            // tokenize special characters
+            index = 0;
+            while ((match = str.substring(index).match(/[^\d\.]/)) != null) {
+
+                tokens.push({
+                    type: 'special',
+                    val: match[0],
+                    position: { row: lineNum, col: index + match.index }
+                });
+
+                index += match['index'] + match[0].length;
+            }
+        })
+
+    return tokens;
+}
+
+const findNumber = (numbers, row, col) => {
+    let res;
+    numbers.forEach((number) => {
+        if (number.connected) return;
+
+        if (number.position.row != row) return;
+
+        if (col < number.position.col || (number.position.col + number.length) < col ) return;
+
+        number.connected = true;
+
+        res = number;
+    });
+
+    return res;
+}
+
+const tokens = tokenizeInput(input);
+
+const specialChars = tokens.filter((token) => token.type == 'special');
+const numbers = tokens.filter((token) => token.type == 'number');
+const grid = input.split('\n').filter(Boolean);
+
+// attach numbers to special characters
+specialChars.forEach((specialChar) => {
+    // search adjacent squares for numbers
+    specialChar.numbers = [];
+    for (let row = specialChar.position.row - 1; row <= specialChar.position.row + 1; row++) {
+        for (let col = specialChar.position.col - 1; col <= specialChar.position.col + 1; col++) {
+            if (/\d/.test(grid[row][col])) {
+                // attach corresponding number to special character if it exists
+                let number = findNumber(numbers, row, col);
+
+                if (number != null)
+                    specialChar.numbers.push(number);
+            }
+        }
+    }
+});
+
+// sum all numbers attached to special characters
+let sum = specialChars.reduce((acc, specialChar) => {
+    return acc + specialChar.numbers.reduce((acc, number) => acc + number.val, 0);
+}, 0);
+
+
+// console.log(util.inspect(tokens, false, null, true));
+
+// console.log(util.inspect(specialChars, false, null, true));
+console.log(sum);
