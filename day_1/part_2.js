@@ -3,7 +3,7 @@ const fs = require('fs');
 
 const input = fs.readFileSync('input.txt', 'utf-8');
 
-const wordToNum = {
+const wordToDigit = {
     one: '1',
     two: '2',
     three: '3',
@@ -18,23 +18,14 @@ const wordToNum = {
 const tokenizeDigits = (str) => {
     const tokens = [];
 
-    const tokenize = (token) => {
-        let regex = new RegExp(`${token}`, 'g');
-        let match;
+    Object.keys(wordToDigit).forEach((digitWord) => {
+        const regex = new RegExp(`${digitWord}`, 'g');
+        for (const match of str.matchAll(regex))
+            tokens.push({ value: wordToDigit[match[0]], index: match.index });
+    })
 
-        while ((match = regex.exec(str)) !== null) {
-            if (/\d/.test(match))
-                tokens.push({index: match.index, value: match[0]});
-            else
-                tokens.push({index: match.index, value: wordToNum[match[0]]});
-        }
-    }
-
-    // tokenize all digit words
-    Object.keys(wordToNum).forEach(tokenize);
-
-    // tokenize each digit
-    Object.values(wordToNum).forEach(tokenize);
+    for (const match of str.matchAll(/\d/g))
+        tokens.push({ value: match[0], index: match.index });
 
     return tokens.sort((a, b) => a.index - b.index);
 };

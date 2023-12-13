@@ -1,0 +1,46 @@
+how to read from a file using fs module
+
+how to split a string by a dilimeter using split method
+
+how to use map method to create a new array with modified elements from previous array
+
+how to use replace string method to search and replace in a string using regex
+
+how to use the global g flag in regex
+
+\D regex to match any character that's not a digit
+
+string concatenation with string1 + string2
+
+how to use reduce method to reduce an array to a single value using an accumulation callback function
+
+how to create objects with {} syntax
+
+the fact that you can create a function by assigning an arrow function to a variable:
+    const testFunction = () => { console.log('hey'); };
+
+how to create an array with [] syntax
+
+how to iterate over all keys in an object using Object.keys(obj).forEach((key) => {});
+
+how to add elements to an array using arr.push() method
+
+how to iterate over object values with Object.values(obj).forEach((val) => {});
+
+how to sort an array with arr.sort((a, b) => a.property - b.property);
+    (a, b) => a.property - b.property tells the sort method to put a ahead of b if a.property is bigger than b.property, or vice versa
+
+two different ways you can use a callback function in a higher order function like map():
+    .map(callback)
+    .map((arg) => callback(arg))
+
+str.indexOf() method to find the starting index of a substring and to start searching at a certain index
+    
+how to use variable value inside regex
+    let regex = new RegExp(`${variable}`, 'g');
+
+how to use regex test method to return true or false depending on whether a string contains a match
+
+how to interate over an iterable using for of loop
+
+how to get index information about regex matches using g global flag with matchAll
