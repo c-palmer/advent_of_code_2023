@@ -1,0 +1,12 @@
+I had an array of strings and I was thinking about it as a 2D array, but in javascript strings are immutable
+I was trying to change characters in the string like so:
+    let str = 'hello';
+    str[0] = 'c';
+    console.log(str);
+this outputs 'hello' instead of 'cello'. Instead, you should turn the string into an array first:
+    let str = 'hello';
+    str = str.split('');
+    str[0] = 'c';
+    str = str.join('\n');
+    console.log(str);
+will now output 'cello'

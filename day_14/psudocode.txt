@@ -1,0 +1,31 @@
+Old way:
+    simulation problem
+
+    simulate O's rolling north:
+        store board in 2D array
+        iterate over each item in array and apply simulation rules
+        tilt north rule:
+            for every O, if there is a . located above, swap
+            apply rule until applying the rule results in no change
+
+    calculuate number:
+        reduce every row of 2D array to the number of O's in the row
+        reverse array
+        reduce array by multiplying element by its index + 1
+
+New way:
+    turn input into array of strings
+    transpose grid so that each column is a row
+
+
+
+O....#....
+O.OO#....#
+.....##...
+OO.#O....O
+.O.....O#.
+O.#..O.#.#
+..O..#O..O
+.......O..
+#....###..
+#OO..#.... 

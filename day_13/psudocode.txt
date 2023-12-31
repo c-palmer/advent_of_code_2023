@@ -1,0 +1,14 @@
+break grid up into rows
+transpose grid and break that up into rows (these are the cols)
+
+start by comparing row 1 and row 2  of original grid to see if they are equal
+set multiplier to 100 for original row case
+    if not, increment both pointers by one to look at next pair of rows
+    if they match
+        take note of the values of the first and second pointer
+        decriment the first pointer and increment the second
+            if the first pointer is decrimented to -1
+            or the second pointer is incremented to # rows + 1
+                reflection point was found
+if reflection was not found in original grid, search transpose in the same way 
+set multiplier to 1 for transpose case

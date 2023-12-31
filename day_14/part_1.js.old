@@ -1,0 +1,44 @@
+const fs = require('fs');
+const util = require('util');
+
+const input = fs.readFileSync('input.txt', 'utf-8');
+
+const needsMore = (grid) => {
+    for (const line of grid) {
+        if (/\.O/.test(line)) return true;
+    }
+
+    return false;
+}
+
+const transposeGrid = (grid) => {
+    const transpose = [];
+    const width = grid[0].length;
+
+    for (let i = 0; i < width; i++) {
+        let newRow = []
+
+        for (const row of grid)
+            newRow.push(row[i]);
+
+        transpose.push(newRow.join(''));
+    }
+
+    return transpose;
+}
+
+let transpose = transposeGrid(input.split('\n'));
+
+// move O's
+while (needsMore(transpose)) {
+    // console.log(util.inspect(transpose.join('\n'), false, null, true));
+
+    transpose = transpose.map((line) => line.replaceAll('.O', 'O.'));
+}
+
+let res = transposeGrid(transpose)
+    .map((line) => line.replaceAll(/[^O]/g, '').length)
+
+res = res.reverse().map((num, index) => num * (index + 1));
+
+console.log(util.inspect(res.reduce((acc, num) => acc + num, 0), false, null, true));
